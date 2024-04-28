@@ -34,4 +34,3 @@ def creation_FAQ_chain():
                                         return_source_documents=False,
                                         chain_type_kwargs={"prompt": PROMPT})
     return chain
-
