@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-db_file_path='FAISS_Index'
+db_file_path = 'FAISS_Index'
 embeddings = HuggingFaceEmbeddings()
 
 def creation_of_vectorDB_in_local(pdf_content):
@@ -33,4 +33,3 @@ def creation_FAQ_chain(pdf_content, user_question):
                                         return_source_documents=False,
                                         chain_type_kwargs={"prompt": PROMPT})
     return chain
-
