@@ -18,9 +18,10 @@ def creation_FAQ_chain():
 
     llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.2)
 
-    prompt_temp="""Given the following context and question, generate an answer based on this context. If the question is similar to the one in the context, provide the corresponding answer. If not, state "This Question not Present in My Database."
-    CONTEXT: {context}
-    QUESTION: {question}"""
+    prompt_temp="""Use the document to answer the question. If you don't know the answer, just state "Unable to retrieve answer", don't try to make up an answer. Please return only the answer to the question and nothing else.
+    Question: {}
+    Answer: ## Input your answer here ##
+    """
 
     PROMPT = PromptTemplate(template=prompt_temp, input_variables=["context", "question"])
     chain = RetrievalQA.from_chain_type(llm=llm,chain_type="stuff", 
