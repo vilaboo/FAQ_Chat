@@ -4,7 +4,7 @@ import streamlit as st
 from Base import creation_FAQ_chain,creation_of_vectorDB_in_local
 
 def pdf_loader(tmp_file_path):
-    loader = PyPDFLoader(temp_filepath)
+    loader = PyPDFLoader(tmp_file_path)
     return loader
 
 def main():
