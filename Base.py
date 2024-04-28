@@ -12,7 +12,7 @@ embeddings = HuggingFaceEmbeddings()
 
 def creation_of_vectorDB_in_local(loader):
     data = loader.load()
-    db =FAISS.from_documents(data, embeddings)
+    db = FAISS.from_documents(data, embeddings)
     db.save_local(db_file_path)
 
 def creation_FAQ_chain(pdf_content, user_question):
