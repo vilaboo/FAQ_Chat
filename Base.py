@@ -21,15 +21,9 @@ def creation_FAQ_chain():
     
     llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.2)
     
-    prompt_temp="""
-    Given the following context and a question, generate an answer based on the content of the uploaded PDF file.
-    
-    CONTEXT:
-    {pdf_content}
-    
-    QUESTION:
-    {user_question}
-    """
+    prompt_temp="""Given the following context and a question, generate an answer based on the content of the uploaded PDF file.
+    CONTEXT:{pdf_content}
+    QUESTION:{user_question}"""
 
     PROMPT = PromptTemplate(template=prompt_temp, input_variables=["pdf_content", "user_question"])
     chain = RetrievalQA.from_chain_type(llm=llm,chain_type="stuff", 
