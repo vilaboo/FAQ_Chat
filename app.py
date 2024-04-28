@@ -56,6 +56,15 @@ def creation_FAQ_chain(page_contents, user_question):
     result = chain({"pdf_content": page_contents, "user_question": user_question})
     return result
 
+def save_uploaded_file(uploaded_file):
+    try:
+        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            tmp_file.write(uploaded_file.read())
+            return tmp_file.name
+    except Exception as e:
+        st.error(f"Error saving file: {e}")
+        return None
+
 def main():
     st.set_page_config(page_title="FAQ Chatbot", layout="wide")
     st.title("FAQ ChatBot with your PDF file")
