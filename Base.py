@@ -12,32 +12,23 @@ embeddings = HuggingFaceEmbeddings()
 
 def creation_of_vectorDB_in_local(loader):
     data = loader.load()
-    db = FAISS.from_documents(data, embeddings)
+    db =FAISS.from_documents(data, embeddings)
     db.save_local(db_file_path)
 
 def creation_FAQ_chain():
-    db = FAISS.load_local(db_file_path, embeddings)
-    retriever = db.as_retriever(score_threshold=0.7)
+    db=FAISS.load_local(db_file_path, embeddings)
+    retriever =db.as_retriever(score_threshold=0.7)
 
-    llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.2)
+    llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.2)
 
-    prompt_temp = """Use the document to answer the question. If you don't know the answer, just state "Unable to retrieve answer", don't try to make up an answer. Please return only the answer to the question and nothing else.
-    Context: {}
-    Question: {}
-    Answer: ## Input your answer here ##
-    """
-
-    # Print debug information
-    print("Input variables:", ["context", "question", "document_variable_name"])
-
-    PROMPT = PromptTemplate(template=prompt_temp, input_variables=["context", "question", "document_variable_name"])
-    chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", 
+    prompt_temp="""Given the following context and question, generate an answer based on this context. If the question is similar to one in the context, provide the corresponding answer. If not, state "This Question not Present in My Database."
+    CONTEXT: {context}
+    QUESTION: {question}"""
+  
+    PROMPT = PromptTemplate(template=prompt_temp, input_variables=["context", "question"])
+    chain = RetrievalQA.from_chain_type(llm=llm,chain_type="stuff", 
                                         retriever=retriever, 
                                         input_key="query", 
                                         return_source_documents=False,
-                                        chain_type_kwargs={"prompt": PROMPT})
-
-    # Print debug information
-    print("Chain input variables:", chain.input_variables)
-    
-    return chain
+                                        chain_type_kwargs={"prompt" : PROMPT})
+return chain
