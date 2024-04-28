@@ -18,7 +18,7 @@ def creation_FAQ_chain():
 
     llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.2)
 
-    prompt_temp="""Given the following context and a question, generate an answer based on this context and a any question that are similar or relevant.
+    prompt_temp="""Given the following theme of context and question, generate an answer based on this context. A new question need not be exactly the same as in the context but still relevant if it is similar.
     In the answer try to provide as much text as possible from "response" section in the source document context without making much changes.
     If the answer is not found in the context, kindly state "This Question not Present in My Database." Don't try to make up an answer.
     CONTEXT: {context}
