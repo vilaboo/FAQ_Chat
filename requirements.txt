@@ -1,0 +1,2 @@
+deeplake
+google-generativeai
