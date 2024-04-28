@@ -10,9 +10,8 @@ load_dotenv()
 db_file_path='FAISS_Index'
 embeddings = HuggingFaceEmbeddings()
 
-def creation_of_vectorDB_in_local(loader):
-    data = loader.load()
-    db = FAISS.from_documents(data, embeddings)
+def creation_of_vectorDB_in_local(pdf_content):
+    db = FAISS.from_documents([pdf_content], embeddings)
     db.save_local(db_file_path)
 
 def creation_FAQ_chain(pdf_content, user_question):
