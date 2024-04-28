@@ -1,3 +1,4 @@
 langchain
 deeplake
 google-generativeai
+PIL
