@@ -72,7 +72,7 @@ def main():
             with st.spinner("Processing"):
                 if doc is not None:
                     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-                        tmp_file.write(doc.getvalue())
+                        tmp_file.write(doc.read())  # Use doc.read() instead of doc.getvalue()
                         tmp_file_path = tmp_file.name
                         st.success(f'File {doc.name} is successfully saved!')
 
