@@ -1,7 +1,3 @@
-!pip install streamlit --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
-!pip install deeplake --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
-!pip install google-generativeai --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
-
 import streamlit as st
 import os
 import tempfile
