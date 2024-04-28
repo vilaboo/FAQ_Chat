@@ -60,7 +60,7 @@ def main():
     st.set_page_config(page_title="FAQ Chatbot", layout="wide")
     st.title("FAQ ChatBot with your PDF file")
     
-    page_contents = None  # Initialize page_contents outside the if block
+    page_contents = None
     
     with st.sidebar:
         st.title("Settings")
@@ -86,22 +86,12 @@ def main():
         st.error("Please upload a PDF file and click Process.")
         return
     
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    query = st.chat_input("Ask the Question")
-    if query:
-        result = creation_FAQ_chain(page_contents, query)
-        a = result["result"]
-        st.chat_message("user").markdown(query)
-        st.session_state.messages.append({"role": "user", "content": query})
-        
-        with st.chat_message("assistant"):
-            st.markdown(a)
-            st.session_state.messages.append({"role": "assistant", "content": a})
+    query = st.text_input("Ask the Question")
+    if st.button("Submit") and query:
+        ans = creation_FAQ_chain(page_contents, query)
+        a = ans["result"]
+        st.markdown(f"**User Question:** {query}")
+        st.markdown(f"**Assistant Answer:** {a}")
 
 if __name__ == '__main__':
     main()
