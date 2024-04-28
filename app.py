@@ -6,10 +6,12 @@ from Base import creation_FAQ_chain,creation_of_vectorDB_in_local
 
 def pdf_loader(tmp_file_path):
     with pdfplumber.open(tmp_file_path) as pdf_file:
-        pdf_content = ""
+        page_contents = []
         for page in pdf_file.pages:
-            pdf_content += page.extract_text()
-    return pdf_content
+            page_content = page.extract_text()
+            page_metadata = {"page_number": page.page_number}
+            page_contents.append({"page_content": page_content, "metadata": page_metadata})
+    return page_contents
 
 def main():
     st.set_page_config(page_title="FAQ Chatbot", layout="wide")
@@ -29,8 +31,8 @@ def main():
                         tmp_file_path = tmp_file.name
                         st.success(f'File {doc.name} is successfully saved!')
 
-                    pdf_content = pdf_loader(tmp_file_path)
-                    creation_of_vectorDB_in_local(pdf_content)
+                    page_contents = pdf_loader(tmp_file_path)
+                    creation_of_vectorDB_in_local(page_contents)
                     st.success("Process Done")
                 else:
                     st.error("Please Upload Your File!")
@@ -43,7 +45,7 @@ def main():
 
     query = st.chat_input("Ask the Question")
     if query:
-        ans = creation_FAQ_chain(pdf_content, query)
+        ans = creation_FAQ_chain(page_contents, query)
         result = ans(query)
         a = result["result"]
         st.chat_message("user").markdown(query)
