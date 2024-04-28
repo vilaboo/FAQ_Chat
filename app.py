@@ -91,6 +91,7 @@ def main():
 
     query = st.chat_input("Ask the Question")
     if query:
+        # Ensure page_contents is passed correctly to creation_FAQ_chain
         ans = creation_FAQ_chain(page_contents, query)
         result = ans(query)
         a = result["result"]
