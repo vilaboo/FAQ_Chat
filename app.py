@@ -69,18 +69,18 @@ def main():
         doc = st.file_uploader("Upload your PDF file and Click Process", 'pdf')
 
         if st.button("Process"):
-            with st.spinner("Processing"):
-                if doc is not None:
-                    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-                        tmp_file.write(doc.read())  # Use doc.read() instead of doc.getvalue()
-                        tmp_file_path = tmp_file.name
+            if doc is not None:
+                with st.spinner("Processing"):
+                    tmp_file_path = save_uploaded_file(doc)
+                    if tmp_file_path:
                         st.success(f'File {doc.name} is successfully saved!')
-
-                    page_contents = pdf_loader(tmp_file_path)
-                    creation_of_vectorDB_in_local(page_contents)
-                    st.success("Process Done")
-                else:
-                    st.error("Please Upload Your File!")
+                        page_contents = pdf_loader(tmp_file_path)
+                        creation_of_vectorDB_in_local(page_contents)
+                        st.success("Process Done")
+                    else:
+                        st.error("Failed to save the uploaded file.")
+            else:
+                st.error("Please Upload Your File!")
         
     if page_contents is None:
         st.error("Please upload a PDF file and click Process.")
@@ -89,7 +89,7 @@ def main():
     query = st.text_input("Ask the Question")
     if st.button("Submit") and query:
         ans = creation_FAQ_chain(page_contents, query)
-        a = ans["result"]
+        a = ans.get("result", "No answer found.")
         st.markdown(f"**User Question:** {query}")
         st.markdown(f"**Assistant Answer:** {a}")
 
