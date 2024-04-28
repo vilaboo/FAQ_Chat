@@ -8,7 +8,8 @@ from langchain.vectorstores import DeepLake
 from langchain.text_splitter import TokenTextSplitter
 from langchain.chains import RetrievalQA, ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
- 
+from PIL import Image
+
 genai.configure(api_key="AIzaSyC2ngziHY2mFK7_epi4U-gzNqq0BQ1pW4s")
 
 # Set up the model
@@ -48,16 +49,18 @@ def submit():
     st.session_state.question = st.session_state.widget
     st.session_state.widget = ''
 
+image = Image.open('FAQ.png')
+
 def main():
     st.set_page_config(page_title="FAQ Chat", layout="wide")    
     faq_logo, title, faq_logo2 = st.columns(3, gap="large")
  
     with faq_logo:
-        st.image("https://previews.dropbox.com/p/thumb/ACR8lEk5YpF06j0BTUh50bOdDndKHMntA2nuXJY8P2-1NJuKsOXCTZ4ibISx4jNht3wiJZN95SB6UkYSwwvXQvlwK_I3YeKSIBD4K3vWXhzcyIt6ij3KgfrnWAwt6_oLnIKahW4BDjDmU1CA5Z91v9Q7i2SSjseC7CqXKYJ4oCEPm8I_6IOVuw0MHLQ3evHqiiP7g4xjhmw9IEdaIWRV-bBcfbJyhH91XZFm4H3KQP9tDxgPsIDrW8kz1RfMt6hHQOAqF-9FQQpoBIudWfle23eJ2pZtFHAvStYST7xCzI_mFscDekWEV9cMK0KrgPobnyFWSHmpjPuFwzcdt_xpl2bJ/p.png",width=228,use_column_width=False)
+        st.image(image, width=228, use_column_width=False)
     with title:
         st.title("FAQ Chat")
     with faq_logo2:
-        st.image("https://previews.dropbox.com/p/thumb/ACR8lEk5YpF06j0BTUh50bOdDndKHMntA2nuXJY8P2-1NJuKsOXCTZ4ibISx4jNht3wiJZN95SB6UkYSwwvXQvlwK_I3YeKSIBD4K3vWXhzcyIt6ij3KgfrnWAwt6_oLnIKahW4BDjDmU1CA5Z91v9Q7i2SSjseC7CqXKYJ4oCEPm8I_6IOVuw0MHLQ3evHqiiP7g4xjhmw9IEdaIWRV-bBcfbJyhH91XZFm4H3KQP9tDxgPsIDrW8kz1RfMt6hHQOAqF-9FQQpoBIudWfle23eJ2pZtFHAvStYST7xCzI_mFscDekWEV9cMK0KrgPobnyFWSHmpjPuFwzcdt_xpl2bJ/p.png",width=228,use_column_width=False)
+        st.image(image, width=228, use_column_width=False)
 
     uploaded_file = st.file_uploader(label='Upload a PDF Document')
 
