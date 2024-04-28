@@ -10,6 +10,8 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain.document_loaders import PyPDFLoader
 
+import os 
+from dotenv import load_dotenv
 load_dotenv()
 
 db_file_path = 'FAISS_Index'
