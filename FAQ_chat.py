@@ -49,18 +49,18 @@ def submit():
     st.session_state.question = st.session_state.widget
     st.session_state.widget = ''
 
-image = Image.open('FAQ.png')
+image = Image.open('/content/FAQ.PNG')
 
 def main():
     st.set_page_config(page_title="FAQ Chat", layout="wide")    
-    faq_logo, title, faq_logo2 = st.columns(3, gap="large")
+    title, title2, faq_logo = st.columns(3, gap="large")
  
-    with faq_logo:
-        st.image(image)
     with title:
-        st.title("FAQ Chat")
-    with faq_logo2:
-        st.image(image)
+        st.title(" ")
+    with title2:
+        st.title("FAQ &nbsp; Chat")
+    with faq_logo:
+        st.image(image, width=100)
 
     uploaded_file = st.file_uploader(label='Upload a PDF Document')
 
