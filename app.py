@@ -13,7 +13,8 @@ def pdf_loader(tmp_file_path):
             page_text = page.extract_text()
             soup = BeautifulSoup(page_text, 'html.parser')
             text = soup.get_text()
-            page_contents.append(text)
+            page_number = page.page_number
+            page_contents.append({"page_content": text, "metadata": {"page_number": page_number}})
     return page_contents
 
 def main():
