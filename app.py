@@ -1,5 +1,7 @@
 from langchain.document_loaders import PyPDFLoader
 import pdfplumber
+from bs4 import BeautifulSoup
+import requests
 import tempfile
 import streamlit as st
 from Base import creation_FAQ_chain,creation_of_vectorDB_in_local
@@ -8,9 +10,10 @@ def pdf_loader(tmp_file_path):
     with pdfplumber.open(tmp_file_path) as pdf_file:
         page_contents = []
         for page in pdf_file.pages:
-            page_content = page.extract_text()
-            page_metadata = {"page_number": page.page_number}
-            page_contents.append({"page_content": page_content, "metadata": page_metadata})
+            page_text = page.extract_text()
+            soup = BeautifulSoup(page_text, 'html.parser')
+            text = soup.get_text()
+            page_contents.append(text)
     return page_contents
 
 def main():
