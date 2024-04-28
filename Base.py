@@ -27,10 +27,17 @@ def creation_FAQ_chain():
     Answer: ## Input your answer here ##
     """
 
+    # Print debug information
+    print("Input variables:", ["context", "question", "document_variable_name"])
+
     PROMPT = PromptTemplate(template=prompt_temp, input_variables=["context", "question", "document_variable_name"])
     chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", 
                                         retriever=retriever, 
                                         input_key="query", 
                                         return_source_documents=False,
                                         chain_type_kwargs={"prompt": PROMPT})
+
+    # Print debug information
+    print("Chain input variables:", chain.input_variables)
+    
     return chain
