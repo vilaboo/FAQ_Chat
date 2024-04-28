@@ -19,11 +19,11 @@ def creation_FAQ_chain():
     llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.2)
 
     prompt_temp="""Use the document to answer the question. If you don't know the answer, just state "Unable to retrieve answer", don't try to make up an answer. Please return only the answer to the question and nothing else.
-    Question: {question}
+    Question: {}
     Answer: ## Input your answer here ##
     """
 
-    PROMPT = PromptTemplate(template=prompt_temp, input_variables=["question"])
+    PROMPT = PromptTemplate(template=prompt_temp)
     chain = RetrievalQA.from_chain_type(llm=llm,chain_type="stuff", 
                                         retriever=retriever, 
                                         input_key="query", 
