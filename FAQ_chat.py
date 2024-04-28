@@ -49,7 +49,7 @@ def submit():
     st.session_state.question = st.session_state.widget
     st.session_state.widget = ''
 
-image = Image.open('/content/FAQ.PNG')
+image = Image.open('FAQ.PNG')
 
 def main():
     st.set_page_config(page_title="FAQ Chat", layout="wide")    
