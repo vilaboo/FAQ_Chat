@@ -11,7 +11,8 @@ db_file_path = 'FAISS_Index'
 embeddings = HuggingFaceEmbeddings()
 
 def creation_of_vectorDB_in_local(page_contents):
-    db = FAISS.from_documents(page_contents, embeddings)
+    texts = [page["page_content"] for page in page_contents]
+    db = FAISS.from_texts(texts, embeddings)
     db.save_local(db_file_path)
 
 def creation_FAQ_chain(page_contents, user_question):
