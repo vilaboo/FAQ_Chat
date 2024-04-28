@@ -29,9 +29,9 @@ def main():
                         tmp_file_path = tmp_file.name
                         st.success(f'File {doc.name} is successfully saved!')
 
-                    pdf_content = pdf_loader(tmp_file_path)
-                    creation_of_vectorDB_in_local(pdf_content)
-                    st.success("Process Done")
+                        pdf_content = pdf_loader(tmp_file_path)
+                        creation_of_vectorDB_in_local(pdf_content)
+                        st.success("Process Done")
                 else:
                     st.error("Please Upload Your File!")
         
