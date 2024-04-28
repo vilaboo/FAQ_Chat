@@ -23,7 +23,7 @@ def creation_FAQ_chain():
     Answer: ## Input your answer here ##
     """
 
-    PROMPT = PromptTemplate(template=prompt_temp)
+    PROMPT = PromptTemplate(template=prompt_temp, input_variables=["question"])
     chain = RetrievalQA.from_chain_type(llm=llm,chain_type="stuff", 
                                         retriever=retriever, 
                                         input_key="query", 
