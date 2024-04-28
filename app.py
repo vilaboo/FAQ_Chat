@@ -51,7 +51,10 @@ def creation_FAQ_chain(page_contents, user_question):
                                         input_key="query", 
                                         return_source_documents=False,
                                         chain_type_kwargs={"prompt": PROMPT})
-    return chain
+    
+    # Execute the chain to get the answer
+    result = chain({"pdf_content": page_contents, "user_question": user_question})
+    return result
 
 def main():
     st.set_page_config(page_title="FAQ Chatbot", layout="wide")
@@ -91,13 +94,11 @@ def main():
 
     query = st.chat_input("Ask the Question")
     if query:
-        # Ensure page_contents is passed correctly to creation_FAQ_chain
-        ans = creation_FAQ_chain(page_contents, query)
-        result = ans(query)
+        result = creation_FAQ_chain(page_contents, query)
         a = result["result"]
         st.chat_message("user").markdown(query)
         st.session_state.messages.append({"role": "user", "content": query})
-
+        
         with st.chat_message("assistant"):
             st.markdown(a)
             st.session_state.messages.append({"role": "assistant", "content": a})
