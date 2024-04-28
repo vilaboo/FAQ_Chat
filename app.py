@@ -23,7 +23,7 @@ def main():
                         tmp_file_path = tmp_file.name
 
                         st.success(f'File {doc.name} is successfully saved!')
-                    
+
                     load = pdf_loader(tmp_file_path)
                     creation_of_vectorDB_in_local(load)
                     st.success("Process Done")
@@ -45,6 +45,6 @@ def main():
         with st.chat_message("assistant"):
             st.markdown(a)
             st.session_state.messages.append({"role": "assistant", "content": a})
-       
+
 if __name__ == '__main__':
     main()
