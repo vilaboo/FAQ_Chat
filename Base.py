@@ -18,7 +18,7 @@ def creation_FAQ_chain():
 
     llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.2)
 
-    prompt_temp="""Given the following context and question, generate an answer based on this context. If the question is similar to one in the context, provide the corresponding answer. If not, state "This Question not Present in My Database."
+    prompt_temp="""Given the following context and question, generate an answer based on this context. If the question is similar to the one in the context, provide the corresponding answer. If not, state "This Question not Present in My Database."
     CONTEXT: {context}
     QUESTION: {question}"""
 
