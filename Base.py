@@ -15,21 +15,23 @@ def creation_of_vectorDB_in_local(loader):
     db =FAISS.from_documents(data, embeddings)
     db.save_local(db_file_path)
 
-def creation_FAQ_chain():
-    db=FAISS.load_local(db_file_path, embeddings)
-    retriever =db.as_retriever(score_threshold=0.7)
+def creation_FAQ_chain(pdf_content, user_question):
+    db = FAISS.load_local(db_file_path, embeddings)
+    retriever = db.as_retriever(score_threshold=0.7)
     
-    llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.2)
+    llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.2)
     
-    prompt_temp="""Given the following context and a question, generate an answer based on the content of the uploaded PDF file.
+    prompt_temp = """
+    Given the following context and a question, generate an answer based on the content of the uploaded PDF file.
     CONTEXT:{pdf_content}
-    QUESTION:{user_question}"""
-
+    QUESTION:{user_question}
+    """
+    
     PROMPT = PromptTemplate(template=prompt_temp, input_variables=["pdf_content", "user_question"])
-    chain = RetrievalQA.from_chain_type(llm=llm,chain_type="stuff", 
+    chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", 
                                         retriever=retriever, 
                                         input_key="query", 
                                         return_source_documents=False,
-                                        chain_type_kwargs={"prompt" : PROMPT})
+                                        chain_type_kwargs={"prompt": PROMPT})
     return chain
 
